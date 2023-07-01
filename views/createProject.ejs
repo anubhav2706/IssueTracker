@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Issue Tracker - Create New Project</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <style>
+    /* Additional CSS styles for the form page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    .menu-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .menu-bar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 18px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .create-project-form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .create-project-form input,
+    .create-project-form textarea {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .create-project-form button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Header and footer styles */
+    .header h1 {
+      margin: 0;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    
+    .social-media-links {
+      margin-top: 10px;
+    }
+    
+    .social-media-links img {
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    html,
+    body {
+      height: 100%;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    main {
+      flex-grow: 1;
+    }
+  </style>
+  <script>
+    function toggleCreateProjectForm() {
+      var form = document.getElementById('createProjectForm');
+      form.classList.toggle('open');
+    }
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="menu-bar">
+        <h1>Create New Project</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <form action="/new-project" method="POST" id="createProjectForm" class="create-project-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+        
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required>
+        
+        <button type="submit">Create Project</button>
+      </form>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <%= new Date().getFullYear() %> All rights reserved.</p>
+      <div class="social-media-links">
+        <% socialMediaLinks.forEach(link => { %>
+          <a href="<%= link.url %>"><img src="<%= link.icon %>" alt="<%= link.name %>"></a>
+        <% }) %>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

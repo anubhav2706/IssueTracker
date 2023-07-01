@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Issue Tracker</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <style>
+    /* Additional CSS styles for the issue detail page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    .menu-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .menu-bar a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 18px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .issue-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .issue-list li {
+      margin-bottom: 10px;
+      background-color: #f7f7f7;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    
+    .issue-list li h3 {
+      margin-top: 0;
+    }
+    
+    .issue-list li p {
+      margin-bottom: 5px;
+    }
+    
+    .create-issue-form {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .create-issue-form.open {
+      display: block;
+    }
+    
+    .create-issue-form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .create-issue-form input,
+    .create-issue-form textarea {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .create-issue-form button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    
+    .social-media-links {
+      margin-top: 10px;
+    }
+    
+    .social-media-links img {
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    html,
+    body {
+      height: 100%;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    main {
+      flex-grow: 1;
+    }
+  </style>
+  <script>
+    function toggleCreateIssueForm() {
+      var form = document.getElementById('createIssueForm');
+      form.classList.toggle('open');
+    }
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="menu-bar">
+        <h1>Issue Tracker</h1>
+        <nav>
+          <% menuItems.forEach(item => { %>
+            <a href="<%= item.link %>"><%= item.label %></a>
+          <% }) %>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <h1>Project Detail - <%= project.name %></h1>
+      
+      <h2>Bugs/Issues</h2>
+      <div>
+        <form action="/issues/<%= project._id %>" method="GET">
+          <div style="display: flex; margin-top: 20px;">
+            <div style="margin-right: 30px;">
+              <label for="labels">Filter by Labels:</label>
+              <select id="labels" name="labels">
+                <option value="">All Labels</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <!-- Add more label options here -->
+              </select>
+            </div>
+            <div style="margin-right: 30px;">
+              <label for="author">Filter by Author:</label>
+              <input type="text" id="author" name="author">
+            </div>
+            <div>
+              <label for="search">Search by Description:</label>
+              <input type="text" id="search" name="search">
+            </div>
+          </div>
+          <button style="margin-top: 5px;" type="submit">Apply Filters</button>
+        </form>
+      </div>
+      
+      <ul class="issue-list">
+        <% issues.forEach(issue => { %>
+          <li>
+            <h3><%= issue.title %></h3>
+            <p><%= issue.description %></p>
+            <p>Labels: <%= issue.labels.join(', ') %></p>
+            <p>Author: <%= issue.author %></p>
+          </li>
+        <% }) %>
+      </ul>
+  
+      <!-- <h2>Create a New Issue</h2> -->
+      <div style="margin: 40px;margin-left: 0%;">
+        <button onclick="toggleCreateIssueForm()">Create New Issue</button>
+      </div>
+      <form id="createIssueForm" class="create-issue-form" action="/issues/<%= project._id %>/create" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+  
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+  
+        <label for="labels">Labels:</label>
+        <select id="labels" name="labels">
+          <option value="">Select a label</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+          <!-- Add more label options here -->
+        </select>
+  
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required>
+  
+        <button type="submit">Create Issue</button>
+      </form>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <%= new Date().getFullYear() %>  All rights reserved.</p>
+      <div class="social-media-links">
+        <% socialMediaLinks.forEach(link => { %>
+          <a href="<%= link.url %>"><img src="<%= link.icon %>" alt="<%= link.name %>"></a>
+        <% }) %>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

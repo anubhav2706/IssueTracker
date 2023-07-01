@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Issue</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <h1>Create Issue</h1>
+  
+  <form action="/issues/<%= projectId %>/create" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    
+    <label for="labels">Labels:</label>
+    <input type="text" id="labels" name="labels">
+    
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author" required>
+    
+    <button type="submit">Create Issue</button>
+  </form>
+</body>
+</html>
